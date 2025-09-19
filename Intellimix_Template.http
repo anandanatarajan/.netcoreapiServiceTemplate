@@ -1,0 +1,6 @@
+@Intellimix_Template_HostAddress = http://localhost:5254
+
+GET {{Intellimix_Template_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

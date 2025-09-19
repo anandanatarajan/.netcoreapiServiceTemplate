@@ -60,6 +60,9 @@
     <None Update="config.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="mail -template.conf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="mail.conf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

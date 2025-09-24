@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /appsettings.json
 /mail.conf
 /nlog.config
+/config-log.db

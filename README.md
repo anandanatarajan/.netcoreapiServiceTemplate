@@ -139,5 +139,17 @@ This documentation provides a high-level overview of the application's entry poi
 - **Health Checks**: Added db health checks for user modules.
 - **Messaging**: Implemented IEventBus for inter-service communication. sample RabbitMQ integration added.
 - **appsettings.json**: Updated with new configurations for messaging.
-- 
+- Sample code snippets for message subscription
+- "  var serviceCollection = new ServiceCollection();
+        serviceCollection.AddEasyNetQ("amqp://guest:guest@localhost:5672/").UseNewtonsoftJson();
+        var provider = serviceCollection.BuildServiceProvider();
+        var bus = provider.GetRequiredService<IBus>();
+        bus.PubSub.SubscribeAsync<string>("test", Subscribe);
+        Console.WriteLine("Listening for messages. Hit <return> to quit.");
+        Console.ReadLine();
 
+"
+      <PackageReference Include="EasyNetQ" Version="8.0.0-beta99" />
+      <PackageReference Include="EasyNetQ.DI.Microsoft" Version="8.0.0-beta96" />
+      <PackageReference Include="EasyNetQ.Serialization.NewtonsoftJson" Version="8.0.0-beta99" />
+      <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />

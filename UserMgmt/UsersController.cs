@@ -1,4 +1,6 @@
 ﻿using Asp.Versioning;
+using EasyNetQ;
+using Intellimix_Template.Messaging;
 using Intellimix_Template.utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +22,15 @@ namespace Intellimix_Template.UserMgmt
     {
         private readonly ILogger<UsersController> _logger;
         private readonly IDBCrud dBClass;
+        private readonly Intellimix_Template.Messaging.IEventBus _eventBus;
 
-        public UsersController(ILogger<UsersController> logger, IDBCrud dbc)
+        public UsersController(ILogger<UsersController> logger, IDBCrud dbc, Intellimix_Template.Messaging.IEventBus eventBus)
         {
             _logger = logger;
             dBClass = dbc;
             dBClass.GetCommand += DBClass_GetCommand;
-         //   dBClass.MailSendingRequested += DBClass_MailSendingRequested; ;
+            dBClass.MailSendingRequested += DBClass_MailSendingRequested; 
+            _eventBus = eventBus;
         }
 
         private void DBClass_MailSendingRequested(object? sender, bool e)
@@ -34,6 +38,7 @@ namespace Intellimix_Template.UserMgmt
             if (e)
             {
                 _logger.LogInformation("Mail sending requested by " + nameof(sender));
+
             }
         }
 
@@ -74,6 +79,7 @@ namespace Intellimix_Template.UserMgmt
             {
                 value.password= SimpleEncryption.Encrypt(value.password);
                 dBClass.AddNew(value);
+                _eventBus.PublishAsync(value);
                 return Ok("User added successfully");
             }
             else

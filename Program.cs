@@ -1,4 +1,5 @@
 using Hangfire;
+using Intellimix_Template.Messaging;
 using Intellimix_Template.Models;
 using Intellimix_Template.UserMgmt;
 using Intellimix_Template.utils;
@@ -112,12 +113,16 @@ namespace Intellimix_Template
                         });
                     });
 
-
+                    
 
                     builder.Host.UseNLog();
                     builder.Services.Configure<JwtSettings>(config.GetSection("Jwt"));
                     var jwtSettings = config.GetSection("Jwt").Get<JwtSettings>();
-
+                    builder.Services.AddSingleton<IEventBus, RabbitMqEventBus>( _ =>
+                    {
+                        return new RabbitMqEventBus(config.GetValue<string>("RabbitMqConnectionString") ?? "host=localhost");
+                    });
+                    
                     builder.Services.AddAuthentication(options =>
                     {
                         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

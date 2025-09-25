@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Intellimix_Template.Messaging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -14,15 +15,18 @@ namespace Intellimix_Template.Controllers
     public class DefaultController : ControllerBase
     {
         private readonly ILogger<DefaultController> _logger;
-        public DefaultController(ILogger<DefaultController> logger) 
+        private readonly Intellimix_Template.Messaging.IEventBus _eventBus;
+        public DefaultController(ILogger<DefaultController> logger,IEventBus eventBus) 
         {
             _logger = logger;
+            _eventBus = eventBus;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
             _logger.LogInformation("DefaultController GET endpoint hit");
+            _eventBus.PublishAsync<string>("DefaultController GET endpoint was called" );
             return Ok("API is running");
         }
 

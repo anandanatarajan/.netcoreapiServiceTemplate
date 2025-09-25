@@ -51,7 +51,7 @@ namespace Intellimix_Template.utils
                 .AddPolicyHandler(GetRetryPolicy(apiClientConfiguration,logger))
                 .AddPolicyHandler(GetCircuitBreakerPolicy(apiClientConfiguration, logger));
         }
-        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy(IConfiguration config,ILogger logger)
+        public static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy(IConfiguration config,ILogger logger)
         {
             var retryCount = config.GetValue<int>("ApiClientconfig:RetryCount", 3);
             return Policy.HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
@@ -65,7 +65,7 @@ namespace Intellimix_Template.utils
 
                 );
         }
-        private static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy(IConfiguration config,ILogger logger)
+        public static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy(IConfiguration config,ILogger logger)
         {
             var exceptionsAllowedBeforeBreaking = config.GetValue<int>("ApiClientconfig:ExceptionsAllowedBeforeBreaking", 5);
             var durationOfBreakInSeconds = config.GetValue<int>("ApiClientconfig:DurationOfBreakInSeconds", 30);

@@ -134,3 +134,10 @@ builder.Services.AddSingleton<IMyService, MyService>();
 
 This documentation provides a high-level overview of the application's entry point and structure. For more details, refer to code comments and configuration files.
 
+
+##  Update on 25-09-2025
+- **Health Checks**: Added db health checks for user modules.
+- **Messaging**: Implemented IEventBus for inter-service communication. sample RabbitMQ integration added.
+- **appsettings.json**: Updated with new configurations for messaging.
+- 
+

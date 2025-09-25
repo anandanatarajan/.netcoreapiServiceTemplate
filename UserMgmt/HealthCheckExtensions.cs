@@ -35,6 +35,13 @@ namespace Intellimix_Template.UserMgmt
         }
         public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
+           using var db= _dbCrud.GetDatabase(); // Example usage to ensure DB connection is available
+            var connectionstate = db.Connection.State;
+            _logger.LogInformation("UserModuleHealthCheck: Database connection state is {State}", connectionstate);
+            if (connectionstate != System.Data.ConnectionState.Open)
+            {
+                return Task.FromResult(HealthCheckResult.Unhealthy("Database connection is not open"));
+            }
             // Implement your health check logic here
             bool isHealthy = true; // Replace with actual health check logic
             using var activity = _activitySource.StartActivity("UserModuleHealthCheck");

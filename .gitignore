@@ -366,3 +366,4 @@ FodyWeavers.xsd
 /mail.conf
 /nlog.config
 /config-log.db
+/Logs/nlog-internal.log

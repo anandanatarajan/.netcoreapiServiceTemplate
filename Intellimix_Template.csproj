@@ -54,6 +54,14 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.12.0" />
     <PackageReference Include="Riok.Mapperly" Version="4.2.1" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.8.3" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.15.0.120848">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="SupermarketRepository" Version="4.0.0.1" />
     <PackageReference Include="SuperMarketRepository.EmailLibrary" Version="1.0.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />

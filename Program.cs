@@ -100,7 +100,7 @@ namespace Intellimix_Template
                     });
                     builder.Services.AddHangfireServer();
                     builder.Services.AddSingleton<SuperEMailSettings>(_ => mailsettings);
-                    builder.Services.AddScoped<MailDatastoreOperations>(x => new MailDatastoreOperations(mailsettings, new BackgroundJobClient()));
+                    builder.Services.AddScoped< MailDatastoreOperations>(x => new MailDatastoreOperations(mailsettings, new BackgroundJobClient()));
                     builder.Services.AddCors(options =>
                     {
                         options.AddDefaultPolicy(policy =>

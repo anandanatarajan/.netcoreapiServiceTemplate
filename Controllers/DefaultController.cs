@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using SupermarketRepository;
+using SuperMarketRepository.EmailLibrary;
 
 namespace Intellimix_Template.Controllers
 {
@@ -16,10 +17,12 @@ namespace Intellimix_Template.Controllers
     {
         private readonly ILogger<DefaultController> _logger;
         private readonly Intellimix_Template.Messaging.IEventBus _eventBus;
-        public DefaultController(ILogger<DefaultController> logger,IEventBus eventBus) 
+        private readonly MailDatastoreOperations mailDatastore;
+        public DefaultController(ILogger<DefaultController> logger,IEventBus eventBus,MailDatastoreOperations _mailDatastore) 
         {
             _logger = logger;
             _eventBus = eventBus;
+            mailDatastore = _mailDatastore;
         }
 
         [HttpGet]
@@ -27,6 +30,19 @@ namespace Intellimix_Template.Controllers
         {
             _logger.LogInformation("DefaultController GET endpoint hit");
             _eventBus.PublishAsync<string>("DefaultController GET endpoint was called" );
+            var mailmessage = new MailMessageDetails
+            {
+                ResponseMessage = "this is a test mail",
+                MessageIsHTML = false,
+                MaxRetries = 2,
+                EmailSubject = "mail from consuming app",
+                EmailBody = "this mail is sent from another application which consumes the library from nuget packagemanager",
+                //  EmailFrom = "sansknowledge@super.com",
+                EmailTo = "krg@super.com",
+                EmailCC = "support@akc.com",
+                CreatedDate = DateTime.Now.ToString("o"),
+            };
+            mailDatastore.Insert(mailmessage);
             return Ok("API is running");
         }
 

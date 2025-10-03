@@ -1,14 +1,14 @@
-﻿using RabbitMQ.Client;
+using RabbitMQ.Client;
 using EasyNetQ;
 namespace Intellimix_Template.Messaging
 {
 
     public interface IEventBus
     {
-        Task PublishAsync<T>(T @event, CancellationToken cancellationToken = default)
+        public Task PublishAsync<T>(T @event, CancellationToken cancellationToken = default)
             where T : class;
 
-        Task SubscribeAsync<T>(Func<T, Task> handler, CancellationToken cancellationToken = default)
+        public Task SubscribeAsync<T>(Func<T, Task> handler, CancellationToken cancellationToken = default)
             where T : class;
     }
 

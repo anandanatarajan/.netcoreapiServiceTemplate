@@ -1,4 +1,162 @@
-﻿[*.cs]
+# EditorConfig is awesome: https://EditorConfig.org
 
+# Top-most EditorConfig file
+root = true
+
+# Global settings
+[*]
+indent_style = space
+indent_size = 4
+tab_width = 4
+end_of_line = crlf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+dotnet_style_coalesce_expression = true:suggestion
+dotnet_style_null_propagation = true:suggestion
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
+dotnet_style_prefer_auto_properties = true:silent
+dotnet_style_object_initializer = true:suggestion
+dotnet_style_collection_initializer = true:suggestion
+dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
+dotnet_style_prefer_conditional_expression_over_assignment = true:silent
+dotnet_style_prefer_conditional_expression_over_return = true:silent
+dotnet_style_explicit_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
+
+# C# files
+[*.cs]
+# Use file-scoped namespaces
+dotnet_style_namespace_declarations = file_scoped:suggestion
 # Default severity for analyzer diagnostics with category 'DocumentationHeader'
 dotnet_analyzer_diagnostic.category-DocumentationHeader.severity = none
+# Use PascalCase for type and method names
+dotnet_naming_rule.types_and_methods_should_be_pascal_case.severity = error
+dotnet_naming_rule.types_and_methods_should_be_pascal_case.symbols = types_and_methods
+dotnet_naming_rule.types_and_methods_should_be_pascal_case.style = pascal_case
+
+dotnet_naming_symbols.types_and_methods.applicable_kinds = class, struct, interface, method
+dotnet_naming_symbols.types_and_methods.applicable_accessibilities = *
+dotnet_naming_symbols.types_and_methods.required_modifiers = *
+
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+
+# Use camelCase for local variables and parameters
+dotnet_naming_rule.locals_and_parameters_should_be_camel_case.severity = error
+dotnet_naming_rule.locals_and_parameters_should_be_camel_case.symbols = locals_and_parameters
+dotnet_naming_rule.locals_and_parameters_should_be_camel_case.style = camel_case
+
+dotnet_naming_symbols.locals_and_parameters.applicable_kinds = local, parameter
+dotnet_naming_symbols.locals_and_parameters.applicable_accessibilities = *
+dotnet_naming_symbols.locals_and_parameters.required_modifiers = *
+
+dotnet_naming_style.camel_case.capitalization = camel_case
+
+# Use _camelCase for private fields
+dotnet_naming_rule.private_fields_should_be_camel_case.severity = error
+dotnet_naming_rule.private_fields_should_be_camel_case.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_camel_case.style = camel_case_with_underscore
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_symbols.private_fields.required_modifiers = *
+
+dotnet_naming_style.camel_case_with_underscore.capitalization = camel_case
+dotnet_naming_style.camel_case_with_underscore.required_prefix = _
+
+# Prefer expression-bodied members for properties and methods
+dotnet_style_prefer_expression_bodied_properties = true:suggestion
+dotnet_style_prefer_expression_bodied_methods = true:suggestion
+
+# Use explicit type instead of var when the type is not apparent
+dotnet_style_require_explicit_type_for_intrinsics = true:warning
+dotnet_style_require_explicit_type_for_simple_types = true:warning
+
+# Use var when the type is apparent
+dotnet_style_require_var_for_built_in_types = false:suggestion
+dotnet_style_require_var_when_type_is_apparent = true:suggestion
+dotnet_style_require_var_elsewhere = false:suggestion
+
+# Use braces for all control flow statements
+csharp_prefer_braces = true:error
+
+# Use explicit access modifiers
+dotnet_style_require_accessibility_modifiers = always:error
+
+# Place System.* namespaces first, then others
+dotnet_sort_system_directives_first = true:error
+
+# Use single-line comments for documentation
+dotnet_style_prefer_single_line_comments = true:suggestion
+
+# Use discard (_) for unused variables
+dotnet_style_prefer_discard = true:suggestion
+
+# Use null-coalescing assignment (??=) where applicable
+dotnet_style_prefer_null_coalescing_assignment = true:suggestion
+
+# Use pattern matching for type checks
+dotnet_style_prefer_pattern_matching = true:suggestion
+
+# Use static local functions where applicable
+dotnet_style_prefer_static_local_function = true:suggestion
+
+# Use readonly for fields where applicable
+dotnet_style_readonly_field = true:suggestion
+
+# Use tuple names for clarity
+dotnet_style_explicit_tuple_names = true:suggestion
+
+# Use simplified boolean expressions
+dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
+
+# Use simplified interpolated strings
+dotnet_style_prefer_simplified_interpolation = true:suggestion
+
+# Use object initializers where applicable
+dotnet_style_object_initializer = true:suggestion
+
+# Use collection initializers where applicable
+dotnet_style_collection_initializer = true:suggestion
+
+# Use default literal instead of default(T)
+dotnet_style_prefer_default_literal = true:suggestion
+
+# Use implicit object creation (new()) where applicable
+dotnet_style_prefer_implicit_object_creation = true:suggestion
+
+# Use file headers for documentation
+file_header_template = Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+# Enforce line length
+max_line_length = 120
+csharp_indent_labels = one_less_than_current
+csharp_using_directive_placement = outside_namespace:silent
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_style_namespace_declarations = block_scoped:silent
+csharp_style_prefer_method_group_conversion = true:silent
+csharp_style_prefer_top_level_statements = true:silent
+csharp_style_prefer_primary_constructors = true:suggestion
+csharp_prefer_system_threading_lock = true:suggestion
+csharp_style_expression_bodied_methods = false:silent
+csharp_style_expression_bodied_constructors = false:silent
+csharp_style_expression_bodied_operators = false:silent
+csharp_style_expression_bodied_properties = true:silent
+csharp_style_expression_bodied_indexers = true:silent
+csharp_style_expression_bodied_accessors = true:silent
+csharp_style_expression_bodied_lambdas = true:silent
+csharp_style_expression_bodied_local_functions = false:silent
+
+# SA1505: Opening braces should not be followed by blank line
+dotnet_diagnostic.SA1505.severity = none
+
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none
+
+# Default severity for analyzer diagnostics with category 'StyleCop.CSharp.OrderingRules'
+dotnet_analyzer_diagnostic.category-StyleCop.CSharp.OrderingRules.severity = none
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = none

@@ -1,19 +1,16 @@
-﻿using Intellimix_Template.Models;
-using LiteDB;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.JsonWebTokens;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using FluentValidation;
-
 namespace Intellimix_Template.Controllers
 {
+    using System.Security.Claims;
+    using System.Security.Cryptography;
+    using System.Text;
+    using Intellimix_Template.Models;
+    using LiteDB;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.RateLimiting;
+    using Microsoft.IdentityModel.JsonWebTokens;
+    using Microsoft.IdentityModel.Tokens;
+
     [Route("api/[controller]")]
     [ApiController]
     public class TokenController : ControllerBase
@@ -37,21 +34,23 @@ namespace Intellimix_Template.Controllers
             {
                 var validate = new LoginValidator();
                 var results = validate.Validate(request);
-                if (!results.IsValid) {
-                    return Unauthorized();
+                if (!results.IsValid)
+                {
+                    return this.Unauthorized();
                 }
+
                 //usual method
                 //if (request.username != "test" || request.password != "pass")
                 //    return Unauthorized();
 
                 var tokens = GenerateTokens(request.username, HttpContext.Connection.RemoteIpAddress?.ToString());
-                return Ok(tokens);
+                return this.Ok(tokens);
             }
             catch (Exception ex)
             {
 
-                _logger.LogError(ex, "Login Failed");
-                return StatusCode(500, "An error occurred during login");
+                this._logger.LogError(ex, "Login Failed");
+                return this.StatusCode(500, "An error occurred during login");
             }
         }
 
@@ -65,7 +64,7 @@ namespace Intellimix_Template.Controllers
                 var stored = col.FindOne(x => x.Id == HashToken(request.Refreshtoken) && !x.Revoked);
 
                 if (stored == null || stored.ExpiresAtUtc < DateTimeOffset.UtcNow)
-                    return Unauthorized();
+                { return Unauthorized(); }
 
                 // Optionally revoke old token to prevent reuse
                 stored.Revoked = true;
@@ -89,7 +88,7 @@ namespace Intellimix_Template.Controllers
             {
                 var col = _liteDb.GetCollection<RefreshToken>("refreshTokens");
                 var stored = col.FindOne(x => x.Id == HashToken(request.Refreshtoken));
-                if (stored == null) return NotFound();
+                if (stored == null) { return NotFound(); }
 
                 stored.Revoked = true;
                 col.Update(stored);

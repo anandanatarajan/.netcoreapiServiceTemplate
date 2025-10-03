@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using EasyNetQ;
 using Intellimix_Template.Messaging;
 using Intellimix_Template.utils;
@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using Newtonsoft.Json;
 using NPoco;
 using SupermarketRepository;
-
+using SuperMarketRepository.EmailLibrary;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Intellimix_Template.UserMgmt
@@ -37,6 +37,8 @@ namespace Intellimix_Template.UserMgmt
         {
             if (e)
             {
+                
+
                 _logger.LogInformation("Mail sending requested by " + nameof(sender));
 
             }
@@ -103,14 +105,18 @@ namespace Intellimix_Template.UserMgmt
             if (results.IsValid)
             {
                var model= dBClass.SelectById<UserModel>(id);
-                if (model is not null) { 
+               if (model is not null) { 
                     UserMapper mapper = new UserMapper();
                     var updateModel = mapper.FromUpdateModel( value);
-                   var ret= dBClass.Update(updateModel);
-                     if (ret>0)
-                          return Ok("User updated successfully");
-                     else
-                          return Problem("User updation failed");
+                    var ret = dBClass.Update(updateModel);
+                    if (ret > 0)
+                    {
+                        return Ok("User updated successfully");
+                    }
+                    else
+                    {
+                        return Problem("User updation failed");
+                    }
 
                 }
                 else
@@ -152,11 +158,11 @@ namespace Intellimix_Template.UserMgmt
 
         [HttpGet("Getusers")]
         public IActionResult GetUsers([FromQuery] UserFilter filters, CancellationToken token)
-        {   
-            
-            var sqlbuilder= new SqlBuilder();
+        {
+
+            var sqlbuilder = new SqlBuilder();
             if (filters == null)
-                return Problem("Invalid filters");
+            { return this.Problem("Invalid filters"); }
             if (filters.roleId.HasValue)
             {
                 sqlbuilder.Where("roleId=@0", filters.roleId.Value);

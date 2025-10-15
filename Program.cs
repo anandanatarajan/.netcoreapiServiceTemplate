@@ -118,10 +118,10 @@ namespace Intellimix_Template
                     builder.Host.UseNLog();
                     builder.Services.Configure<JwtSettings>(config.GetSection("Jwt"));
                     var jwtSettings = config.GetSection("Jwt").Get<JwtSettings>();
-                    builder.Services.AddSingleton<IEventBus, RabbitMqEventBus>( _ =>
-                    {
-                        return new RabbitMqEventBus(config.GetValue<string>("RabbitMqConnectionString") ?? "host=localhost");
-                    });
+                    builder.Services.AddSingleton<IEventBus>( p =>
+                    
+                         new RabbitMqEventBus(config.GetValue<string>("RabbitMqConnectionString") ?? "host=localhost",p.GetRequiredService<ILogger<RabbitMqEventBus>>())
+                    );
                     
                     builder.Services.AddAuthentication(options =>
                     {
